@@ -46,7 +46,7 @@ describe('cargoQueue', () => {
                 expect(c.length()).to.equal(0);
                 call_order.push('callback ' + 3);
             });
-        }, 15);
+        }, 10);
         setTimeout(() => {
             c.push(4, (err, arg) => {
                 expect(err).to.equal('error');
@@ -61,7 +61,7 @@ describe('cargoQueue', () => {
                 expect(c.length()).to.equal(0);
                 call_order.push('callback ' + 5);
             });
-        }, 30);
+        }, 40);
 
 
         c.drain = function () {
