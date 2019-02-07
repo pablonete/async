@@ -300,7 +300,7 @@ describe('queue', function(){
 
     it('bulk task', (done) => {
         var call_order = [],
-            delays = [60,10,100,10];
+            delays = [50,10,120,10];
 
         // worker1: --1-4
         // worker2: -2---3
@@ -310,7 +310,7 @@ describe('queue', function(){
             setTimeout(() => {
                 call_order.push('process ' + task);
                 callback('error', task);
-            }, delays.splice(0,1)[0]);
+            }, delays.shift());
         }, 2);
 
         q.push( [1,2,3,4], (err, arg) => {
