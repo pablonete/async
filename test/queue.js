@@ -10,7 +10,7 @@ describe('queue', function(){
     it('basics', (done) => {
 
         var call_order = [];
-        var delays = [40,10,60,10];
+        var delays = [60,10,100,10];
 
 
         // worker1: --1-4
