@@ -300,7 +300,7 @@ describe('queue', function(){
 
     it('bulk task', (done) => {
         var call_order = [],
-            delays = [40,10,60,10];
+            delays = [60,10,100,10];
 
         // worker1: --1-4
         // worker2: -2---3
