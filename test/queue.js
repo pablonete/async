@@ -1,7 +1,7 @@
 var async = require('../lib');
 var {expect} = require('chai');
 var assert = require('assert');
-
+var { relativeMs } = require('./support/relative-delay');
 
 describe('queue', function(){
     // several tests of these tests are flakey with timing issues
@@ -10,7 +10,7 @@ describe('queue', function(){
     it('basics', (done) => {
 
         var call_order = [];
-        var delays = [40,10,60,10];
+        var delays = relativeMs([40,10,60,10]);
 
 
         // worker1: --1-4
@@ -300,7 +300,7 @@ describe('queue', function(){
 
     it('bulk task', (done) => {
         var call_order = [],
-            delays = [40,10,60,10];
+            delays = relativeMs([40,10,60,10]);
 
         // worker1: --1-4
         // worker2: -2---3
@@ -310,7 +310,7 @@ describe('queue', function(){
             setTimeout(() => {
                 call_order.push('process ' + task);
                 callback('error', task);
-            }, delays.splice(0,1)[0]);
+            }, delays.shift());
         }, 2);
 
         q.push( [1,2,3,4], (err, arg) => {
