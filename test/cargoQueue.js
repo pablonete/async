@@ -11,7 +11,7 @@ describe('cargoQueue', () => {
 
     it('cargoQueue', (done) => {
         var call_order = [],
-            delays = [80, 80, 40];
+            delays = [40, 50, 60];
 
         // worker: --12--34--5-
         // order of completion: 1,2,3,4,5
@@ -46,7 +46,7 @@ describe('cargoQueue', () => {
                 expect(c.length()).to.equal(0);
                 call_order.push('callback ' + 3);
             });
-        }, 20);
+        }, 15);
         setTimeout(() => {
             c.push(4, (err, arg) => {
                 expect(err).to.equal('error');
@@ -61,7 +61,7 @@ describe('cargoQueue', () => {
                 expect(c.length()).to.equal(0);
                 call_order.push('callback ' + 5);
             });
-        }, 80);
+        }, 30);
 
 
         c.drain = function () {
