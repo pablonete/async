@@ -223,7 +223,7 @@ describe('queue', function(){
         this.retries(3); // test can be flakey
 
         var call_order = [];
-        var delays = [40,10,60,10];
+        var delays = [60,10,100,10];
         var concurrencyList = [];
         var running = 0;
 
