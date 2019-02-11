@@ -3,15 +3,11 @@ var {expect} = require('chai');
 var assert = require('assert');
 
 
-describe('queue', function(){
-    // several tests of these tests are flakey with timing issues
-    this.retries(3);
-
+describe('queue', () => {
     it('basics', (done) => {
 
         var call_order = [];
-        var delays = [60,10,100,10];
-
+        var delays = [50,10,120,10];
 
         // worker1: --1-4
         // worker2: -2---3
@@ -66,7 +62,7 @@ describe('queue', function(){
 
     it('default concurrency', (done) => {
         var call_order = [],
-            delays = [40,10,60,10];
+            delays = [50,10,120,10];
 
         // order of completion: 1,2,3,4
 
@@ -219,11 +215,9 @@ describe('queue', function(){
         }, 40);
     });
 
-    it('push without callback', function(done) {
-        this.retries(3); // test can be flakey
-
+    it('push without callback', (done) => {
         var call_order = [];
-        var delays = [60,10,100,10];
+        var delays = [50,10,120,10];
         var concurrencyList = [];
         var running = 0;
 
