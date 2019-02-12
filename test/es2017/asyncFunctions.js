@@ -303,7 +303,7 @@ module.exports = function () {
     /* eslint prefer-arrow-callback: 0, object-shorthand: 0 */
     it.only('should handle async functions in autoInject', (done) => {
         var FN_ARGS = /^(?:async\s+)?(?:function)?\s*[^(]*\(\s*([^)]+)\s*\)(?:\s*{)/m;
-        var ARROW_FN_ARGS = /^(?:async\s+)?(?:function)?\(?\s*([^)^=]+)\s*\)?(?:\s*=>)/m;
+        var ARROW_FN_ARGS = /^(?:async\s+)?(?:function\s+)?\(?\s*([^)^=]+)\s*\)?(?:\s*=>)/m;
         // var FN_ARG_SPLIT = /,/;
         // var FN_ARG = /(=.+)?(\s*)$/;
         var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
