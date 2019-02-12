@@ -302,7 +302,13 @@ module.exports = function () {
 
     /* eslint prefer-arrow-callback: 0, object-shorthand: 0 */
     it.only('should handle async functions in autoInject', (done) => {
-        async.autoInject({
+        var FN_ARGS = /^(?:async\s+)?(?:function)?\s*[^(]*\(\s*([^)]+)\s*\)(?:\s*{)/m;
+        var ARROW_FN_ARGS = /^(?:async\s+)?\(?\s*([^)^=]+)\s*\)?(?:\s*=>)/m;
+        // var FN_ARG_SPLIT = /,/;
+        // var FN_ARG = /(=.+)?(\s*)$/;
+        var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+
+        const fns = {
             z: async function () { return 0 },
             a: async function () {
                 return await Promise.resolve(1);
@@ -316,7 +322,21 @@ module.exports = function () {
             d: async c => {
                 return await Promise.resolve(c + 1);
             }
-        }, (err, result) => {
+        };
+
+        const { c } = fns;
+        expect(c[Symbol.toStringTag]).to.equal('AsyncFunction');
+        const src = c.toString().replace(STRIP_COMMENTS, '');
+        expect(src).to.equal('async (a, b) => {\n                return await Promise.resolve(a + b);\n            }');
+
+        let match = src.match(FN_ARGS);
+        expect(match).to.be.null;
+        if (!match) {
+            match = src.match(ARROW_FN_ARGS);
+            expect(match[1]).to.equal("a, b");
+        }
+
+        async.autoInject(fns, (err, result) => {
             expect(result).to.eql({z: 0, a: 1, b: 2, c: 3, d: 4});
             done(err);
         });
